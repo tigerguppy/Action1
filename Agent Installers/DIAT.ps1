@@ -115,4 +115,4 @@ if ($RemoveInstallerWhenDone) {
 
 $ProgressPreference = $ProgressPreference_Original
 
-Read-Host "$(Get-Date -Format O) : Press enter to exit."
+#Read-Host "$(Get-Date -Format O) : Press enter to exit."
