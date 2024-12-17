@@ -1,3 +1,32 @@
+<#
+.SYNOPSIS
+    This is a custom data source for Action1 and is meant to determine the readiness of an endpoint to be upgraded to Wind9ows 11.
+
+.DESCRIPTION
+    This script checks for hardware compatibility based on Windows 11 requirements, such as OS version, 
+    disk space, memory, TPM presence and version, Secure Boot, and processor details.
+    The script performs several validations and outputs a result object containing:
+    - Hardware readiness status
+    - Reason(s) for failure, if any
+    - Detailed logging for each hardware check
+
+.LINK
+    https://aka.ms/HWReadinessScript
+
+.NOTES
+    File Name      : Win 11 Readiness.ps1
+    Author         : Tony Burrows
+    Version        : 1.2
+    Date Created   : 2023-11-08
+    Last Modified  : 2024-12-17
+
+    DISCLAIMER:
+    This script is provided "AS IS" without warranty of any kind, either express or implied, 
+    including but not limited to the implied warranties of merchantability and/or fitness 
+    for a particular purpose. Use at your own risk.
+#>
+
+
 function Get-Win11Readiness {
     #=============================================================================================================================
 
@@ -506,11 +535,15 @@ $Objects = Get-Win11Readiness;
 $result = New-Object System.Collections.ArrayList;
 $numerator = 0;
 
+$CompInfo = Get-ComputerInfo
+
 $Objects | ForEach-Object {
-    $currentOutput = '' | Select-Object Result, Reason, Log, A1_Key;
+    $currentOutput = '' | Select-Object Result, Reason, Log, Manufacturer, Model, A1_Key;
     $currentOutput.Result = $_.returnResult;
     $currentOutput.Reason = $_.returnReason;
     $currentOutput.Log = $_.logging;
+    $currentOutput.Manufacturer = $CompInfo.CsManufacturer
+    $currentOutput.Model = $CompInfo.CsModel
     $currentOutput.A1_Key = [string]$numerator + ':' + [string]$_.SID;
 
     $result.Add($currentOutput) | Out-Null;
