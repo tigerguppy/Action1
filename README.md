@@ -9,11 +9,3 @@ DIAT
 Info Only
 
 	irm https://tony.support/a1-info | iex
-
-EC
-
-	irm https://tony.support/a1-ec | iex
-
-PAG
-
- 	irm https://tony.support/a1-pag | iex
