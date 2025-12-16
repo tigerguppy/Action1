@@ -82,7 +82,7 @@ if (Test-Path -Path "$TempFolder\$InstallerFilename") {
 }
 
 if ($VerboseOutput) { Write-Output "$(Get-Date -Format O) : Downloading file $InstallerFilename" }
-Invoke-WebRequest -Uri "$DownloadUrl" -OutFile "$TempFolder\$InstallerFilename"
+Invoke-WebRequest -Uri "$DownloadUrl" -OutFile "$TempFolder\$InstallerFilename" -UseBasicParsing
 
 if ($VerboseOutput) { Write-Output "$(Get-Date -Format O) : Installing $InstallerFilename" }
 msiexec /i "$TempFolder\$InstallerFilename" /quiet
